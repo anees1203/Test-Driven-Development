@@ -1,8 +1,6 @@
 FROM python:3.8-slim
 WORKDIR /app
+RUN python -m pip install --upgrade pip
+RUN pip install pytest==6.2.5
 COPY . /app
-RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 80
-
-# Run test_sparse_matrix.py when the container launches
-CMD ["python", "test_sparse_matrix.py"]
+CMD ["pytest"]
