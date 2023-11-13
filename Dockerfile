@@ -1,6 +1,6 @@
 FROM python:3.8-slim
 WORKDIR /app
-COPY sparse_recommender.py /app
-COPY test_sparse_matrix.py /app
+COPY . /app 
+RUN pip install pytest
 CMD ["python", "test_sparse_matrix.py"]
 
