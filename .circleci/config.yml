@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t $anees1224/myapp:${CIRCLE_SHA1} .
+            docker build -t anees1224/myapp:${CIRCLE_SHA1} .
       - run:
           name: Authenticate with Docker Hub
           command: |
