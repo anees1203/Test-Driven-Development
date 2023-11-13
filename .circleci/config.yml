@@ -22,16 +22,13 @@ jobs:
           version: 19.03.13
       - run:
           name: Build Docker Image
-          command: |
-            docker build -t anees1224/myapp:${CIRCLE_SHA1} .
+          command: docker build -t anees1224/myapp:${CIRCLE_SHA1} .
       - run:
           name: Authenticate with Docker Hub
-          command: |
-            echo "$DOCKERHUB_PASS" | docker login --username anees1224 --password-stdin
+          command: echo "$DOCKERHUB_PASS" | docker login --username anees1224 --password-stdin
       - run:
           name: Push Docker Image to Docker Hub
-          command: |
-            docker push anees1224/myapp:${CIRCLE_SHA1}
+          command: docker push anees1224/myapp:${CIRCLE_SHA1}
 
 workflows:
   version: 2
