@@ -1,6 +1,6 @@
 FROM python:3.8-slim
 WORKDIR /app
-RUN python -m pip install --upgrade pip
-RUN pip install pytest==6.2.5
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
-CMD ["pytest"]
+CMD ["python", "your_application_script.py"]
