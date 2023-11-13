@@ -1,7 +1,7 @@
-# Use an official Python runtime as a base image
 FROM python:3.8-slim
 WORKDIR /app
-RUN pip install --upgrade pip
+ENV MAX_WORKERS=2
+RUN pip install --upgrade pip --no-cache-dir --default-timeout=100 --no-input --use-feature=2020-resolver
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
