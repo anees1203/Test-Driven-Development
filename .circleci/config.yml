@@ -1,23 +1,46 @@
 version: 2.1
 
 jobs:
-  build_and_test:
-    machine: true 
+  run_tests:
+    docker:
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
-          name: Set up Python environment
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python3 python3-pip
-      - run:
           name: Install Python dependencies
-          command: pip3 install -r requirements.txt
+          command: pip install -r requirements.txt
       - run:
           name: Run tests with pytest
           command: pytest
 
+  build_and_push:
+    docker:
+      - image: cimg/python:3.8
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t $anees1224/myapp:${CIRCLE_SHA1} .
+      - run:
+          name: Authenticate with Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login --username anees1224 --password-stdin
+      - run:
+          name: Push Docker Image to Docker Hub
+          command: |
+            docker push anees1224/myapp:${CIRCLE_SHA1}
+
 workflows:
-  test_my_app:
+  version: 2
+  build_and_deploy:
     jobs:
-      - build_and_test
+      - run_tests
+      - build_and_push:
+          requires:
+            - run_tests
+          filters:
+            branches:
+              only: main
