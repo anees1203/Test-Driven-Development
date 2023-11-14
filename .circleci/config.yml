@@ -8,10 +8,13 @@ jobs:
       - checkout
       - run:
           name: Install Python dependencies
-          command: pip install requirements.txt
+          command: pip install -r requirements.txt
       - run:
           name: Run tests with pytest
           command: pytest
+      - run:
+          name: Update pip
+          command: pip install --upgrade pip
 
   build_and_push:
     docker:
