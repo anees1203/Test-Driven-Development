@@ -3,4 +3,5 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --progress-bar off -r requirements.txt
 COPY . /app
-CMD ["python", "test_sparse_matrix.py"]
+ENV PYTHONUNBUFFERED=1
+CMD ["pytest", "-v", "test_sparse_matrix.py"]
